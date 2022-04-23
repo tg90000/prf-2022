@@ -1,25 +1,26 @@
 const mongoose = require('mongoose');
 
-let productSchema = new mongoose.Schema(
+let aruSchema = new mongoose.Schema(
     {
-        name: {
+        nev: {
             type: String,
             required: true
         },
-        price: {
+        ar: {
             type: Number,
             required: true,
-            min: [ 0, "Price must be a non-negative value." ]
+            min: [ 0, "Az ar nem lehet negativ" ]
         },
-        stock: {
+        darab: {
             type: Number,
             required: true,
-            min: [ 0, "Stock must be a non-negative value."]
+            min: [ 0, "Nemnegativ mennyiseg kell"]
         }
     },
     {
-        collection: 'products'
+        collection: 'aruk'
     }
 );
 
-mongoose.model('product', productSchema);
+module.exports = aruSchema
+
