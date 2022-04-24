@@ -1,7 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CartComponent } from './components/cart/cart.component';
+import { LoginComponent } from './components/login/login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { AuthGuard } from './guards/auth.guard';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'shop', component: ShopComponent, canActivate: [AuthGuard]},
+  {path: 'cart', component:CartComponent, canActivate: [AuthGuard]},
+  {path: '**', component: NotFoundComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

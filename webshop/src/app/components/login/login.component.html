@@ -1,39 +1,37 @@
 <div class="loginDiv">
     <mat-card class="loginCard mat-elevation-z10">
       <mat-card-header>
-        <mat-card-title>{{constants.Login}}</mat-card-title>
+        <mat-card-title>Belépés</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <form class="form" [formGroup]="loginForm" (keyup.enter)="this.onSubmit()">
           <mat-form-field>
-            <mat-label>{{constants.EducationIdOrUsername}}</mat-label>
-            <input matInput formControlName="nameOrEducationId" name="username" required>
-            <mat-error *ngIf="loginForm.controls['nameOrEducationId'].hasError('required')">
-              {{constants.EducationIdOrUsername}} {{constants.IsRequired}}
+            <mat-label>Felhasználónév</mat-label>
+            <input matInput formControlName="username" name="username" required>
+            <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+              Kitöltés kötelező
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>{{constants.Password}}</mat-label>
+            <mat-label>Jelszó</mat-label>
             <input matInput formControlName="password" type="password" name="password" required>
             <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
-              {{constants.Password}} {{constants.IsRequired}}
+              Kitöltés kötelező
             </mat-error>
           </mat-form-field>
-          <mat-checkbox color="primary" formControlName="rememberMe">{{constants.RememberMe}}</mat-checkbox>
           <mat-error *ngIf="loginForm.hasError('invalid')" class="center">
-            {{constants.login.InvalidCredentials}}
+            Belépés sikertelen.
           </mat-error>
         </form>
-        <a href="javascript:void(0)" routerLink="/forgot-password" style="color: #789">{{constants.login.ForgotPassword}}</a>
       </mat-card-content>
       <mat-card-actions class="loginCardActions">
         <button mat-raised-button color="primary" [disabled]="loading || loginForm.invalid" (click)="onSubmit()">
           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          <span>{{constants.Login}}</span>
+          <span>Belépés</span>
         </button>
       </mat-card-actions>
       <mat-card-footer class="loginCardFooter">
-        <a href="javascript:void(0)" routerLink="/registration">{{constants.login.NotAUser}}</a>
+        <a href="javascript:void(0)" routerLink="/registration">Regisztrálj itt</a>
       </mat-card-footer>
     </mat-card>
   </div>

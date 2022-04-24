@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SessionService } from './services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'webshop';
+  constructor(private sessionService: SessionService) { }
+
+  isLoggedIn() {
+    return this.sessionService.isLoggedIn();
+  }
+
+  logOut() {
+    this.sessionService.destroy();
+  }
 }
