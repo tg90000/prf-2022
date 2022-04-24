@@ -1,26 +1,29 @@
 const router = require('express').Router()
+const passport = require('passport');
 
 const mongoose = require('mongoose')
 const aruModel = mongoose.model('aru')
 
-router.route('/product').post(
-    (req, res) => {
-        if(req.body.ar && req.body.darab) {
-            let aru = new aruModel({nev: req.body.nev, ar: req.body.ar, 
-                darab: req.body.darab})
-            aru.save((err) => {
-                if(err) {
-                    return res.status(500).send('Gond a db beszuras soran ' + err)
-                }
-                return res.status(200).send("Aru elmentve")
-            })
-        } else {
-            return res.status(400).send("Hiányzik a darabszám vagy az ár")
-        }
+router.route('/product').post(passport.authenticate('bearer', { session: false }),(req, res) => {
+    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
+    if(req.body.ar && req.body.darab) {
+        let aru = new aruModel({nev: req.body.nev, ar: req.body.ar, 
+            darab: req.body.darab})
+        aru.save((err) => {
+            if(err) {
+                return res.status(500).send('Gond a db beszuras soran ' + err)
+            }
+            return res.status(200).send("Aru elmentve")
+        })
+    } else {
+        return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
-);
+}).get(passport.authenticate('bearer', { session: false }),(req,res) => {
+    const products = await productModel.find({}, '-__v')
+    res.status(200).json(products);
+});
 
-router.route('/product/:id?').get((req, res) => {
+router.route('/product/:id?').get(passport.authenticate('bearer', { session: false }),(req, res) => {
     if(req.params.id) {
         aruModel.findOne({nev: req.params.id}, (err, aru) => {
             // ha itt az elso parameternek van erteke, akkor adatbázishiba történt
@@ -35,10 +38,11 @@ router.route('/product/:id?').get((req, res) => {
             return res.status(200).send(aruk)
         })
     }
-}).post((req, res) => {
+}).post(passport.authenticate('bearer', { session: false }),(req, res) => {
     if(!req.params.id) {
         return res.status(400).send('Add meg milyen árut kell felvenni!')
     }
+    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
     if(req.body.ar && req.body.darab) {
         let aru = new aruModel({nev: req.params.id, ar: req.body.ar, 
             darab: req.body.darab})
@@ -51,7 +55,7 @@ router.route('/product/:id?').get((req, res) => {
     } else {
         return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
-}).put((req, res) => {
+}).put(passport.authenticate('bearer', { session: false }),(req, res) => {
     if(req.params.id) {
         if(req.body.ar || req.body.darab) {
             aruModel.findOne({nev: req.params.id}, (err, aru) => {
@@ -72,7 +76,8 @@ router.route('/product/:id?').get((req, res) => {
     } else {
         return res.status(400).send("Hiányzik az id")
     }
-}).delete((req, res) => {
+}).delete(passport.authenticate('bearer', { session: false }),(req, res) => {
+    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
     if(req.params.id) {
         aruModel.deleteOne({nev: req.params.id}, (err) => {
             if(err) return res.status(500).send('Hiba az aru törlése kozben')

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 let userSchema = new mongoose.Schema(
     {
-        username: {
+        name: {
             type: String,
             unique: true,
             required: true,
@@ -47,16 +47,11 @@ let userSchema = new mongoose.Schema(
     }
 );
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', function (next) {
     const user = this;
     if (user.isModified('password')) {
-        try {
-            const salt = await  bcrypt.genSalt(8);
-            user.password = await bcrypt.hash(user.password, salt);
-        } catch (e) {
-            console.log('Error during password encryption!')
-            next(e)
-        }
+        const salt =  bcrypt.genSalt(10);
+        user.password = bcrypt.hash(user.password, salt);
     } else {
         next();
     }
