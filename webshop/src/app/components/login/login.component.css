@@ -1,0 +1,80 @@
+.loginCard {
+    width: 350px;
+    float: right;
+    margin-top: 15%;
+  }
+  
+  .img-container {
+    float: left;
+    margin-top: 10%;
+    margin-left: 10%;
+    padding-bottom: 15%;
+  }
+  
+  .loginCardActions {
+    text-align: right;
+    padding-right: 15px;
+  }
+  
+  .loginCardFooter {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .form {
+    margin: auto;
+    width: 100%;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  button {
+    border-radius: 10px;
+    width: 40%;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .loginCard {
+      float: none;
+      margin-top: 8%;
+    }
+  
+    .loginDiv {
+      display: flex;
+      justify-content: center;
+    }
+  
+    .img-container {
+      display: flex;
+      justify-content: center;
+      float: none;
+    }
+  }
+  
+  
+  @media screen and (max-width: 450px) {
+    .loginCard {
+      float: none;
+      margin-top: 5%;
+    }
+  
+    .img-container {
+      display: none;
+    }
+  }
+  
+  mat-form-field {
+    padding-bottom: 3%;
+  }
+  
+  mat-card-header {
+    padding-top: 2%;
+    padding-bottom: 3%;
+  }
+  

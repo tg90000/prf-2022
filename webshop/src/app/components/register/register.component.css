@@ -1,0 +1,84 @@
+.registerCard {
+    width: 350px;
+    float: right;
+    margin-top: 5%;
+  }
+  
+  .img-container {
+    float: left;
+    margin-top: 10%;
+    margin-left: 10%;
+    padding-bottom: 15%;
+  }
+  
+  .registerCardActions {
+    text-align: right;
+    padding-right: 15px;
+  }
+  
+  .registerCardFooter {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .form {
+    margin: auto;
+    width: 100%;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-error {
+    display: none;
+  }
+  
+  mat-form-field mat-error:first-child {
+    display: block;
+  }
+  
+  button {
+    border-radius: 10px;
+    width: 40%;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .registerCard {
+      float: none;
+      margin-top: 8%;
+    }
+  
+    .registerDiv {
+      display: flex;
+      justify-content: center;
+    }
+  
+    .img-container {
+      display: flex;
+      justify-content: center;
+      float: none;
+    }
+  }
+  
+  
+  @media screen and (max-width: 450px) {
+    .registerCard {
+      float: none;
+      margin-top: 5%;
+    }
+  
+    .img-container {
+      display: none;
+    }
+  }
+  
+  mat-form-field {
+    padding-bottom: 3%;
+  }
+  
+  mat-card-header {
+    padding-top: 2%;
+    padding-bottom: 3%;
+  }
+  

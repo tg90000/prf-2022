@@ -1,1 +1,71 @@
-<p>register works!</p>
+<div class="registerDiv">
+    <mat-card class="registerCard mat-elevation-z10">
+      <mat-card-header>
+        <mat-card-title>Regisztráció</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="form" [formGroup]="registerForm" (keyup.enter)="this.onSubmit()">
+          <mat-form-field>
+            <mat-label>Felhasználónév</mat-label>
+            <input matInput formControlName="username" name="username" required>
+            <mat-error *ngIf="this.controls['username'].hasError('required')">
+              Felhasználónév megadása kötelező
+            </mat-error>
+            <mat-error *ngIf="this.controls['username'].hasError('pattern')">
+              Felhasználónévnek valid formátuma kell legyen
+            </mat-error>
+            <mat-error *ngIf="this.controls['username'].hasError('duplicateEducationId')">
+              Felhasználónév foglalt
+            </mat-error>
+          </mat-form-field>
+          
+          
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" name="email" required>
+            <mat-error *ngIf="this.controls['email'].hasError('required')">
+              Email megadása kötelező
+            </mat-error>
+            <mat-error *ngIf="this.controls['email'].hasError('email')">
+                Emailnek valid formátuma kell legyen
+            </mat-error>
+            <mat-error *ngIf="this.controls['email'].hasError('duplicateEmail')">
+              Email már használatban van
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Jelszó</mat-label>
+            <input matInput formControlName="password" type="password" name="password" required>
+            <mat-error *ngIf="this.controls['password'].hasError('required')">
+              Jelszó megadása kötelező
+            </mat-error>
+            <mat-error *ngIf="this.controls['password'].hasError('minlength')">
+              Jelszó minimum 6 karakter kell legyen 
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Jelszó megerősítése</mat-label>
+            <input matInput formControlName="confirmPassword" type="password" name="confirmPassword" required>
+            <mat-error *ngIf="this.controls['confirmPassword'].hasError('required')">
+              Mező kitöltése kötelező
+            </mat-error>
+            <mat-error *ngIf="this.controls['confirmPassword'].hasError('passwordMismatch')">
+              A két megadott jelszónak meg kell egyeznie
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions class="registerCardActions">
+        <button mat-raised-button color="primary"
+                [disabled]="loading || registerForm.invalid"
+                (click)="onSubmit()">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          <span>Regisztráció</span>
+        </button>
+      </mat-card-actions>
+      <mat-card-footer class="registerCardFooter">
+        <a href="javascript:void(0)" routerLink="/login">Belépés</a>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  

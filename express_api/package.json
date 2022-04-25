@@ -10,9 +10,15 @@
   "author": "András Czégel",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "mongoose": "^6.2.4"
+    "jwt-simple": "^0.5.6",
+    "mongoose": "^6.2.4",
+    "passport": "^0.5.2",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
   }
 }

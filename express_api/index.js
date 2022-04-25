@@ -1,7 +1,15 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const BearerStrategy = require('passport-http-bearer').Strategy;
+const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt');
+
+const path = require('path');
 const cors = require('cors');
-const app = express()
 
 const dbUrl = process.env.MONGODB_URI;
 mongoose.connect(dbUrl)
@@ -15,7 +23,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-passport.use('local', new localStrategy(function (username, password, done) {
+passport.use('local', new LocalStrategy(function (username, password, done) {
     const userModel = mongoose.model('user')
     userModel.findOne({ username: username }, function (err, user) {
         if (err) return done('Hiba lekeres soran', null);

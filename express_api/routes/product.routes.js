@@ -19,7 +19,7 @@ router.route('/product').post(passport.authenticate('bearer', { session: false }
         return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
 }).get(passport.authenticate('bearer', { session: false }),(req,res) => {
-    const products = await productModel.find({}, '-__v')
+    const products = productModel.find({}, '-__v')
     res.status(200).json(products);
 });
 

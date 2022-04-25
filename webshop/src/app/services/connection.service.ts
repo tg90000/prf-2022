@@ -11,9 +11,11 @@ import { SessionService } from './session.service';
 })
 export class ConnectionService {
 
+  public data: string = "printme";
+
   constructor(private httpClient: HttpClient) { }
 
-  login(un: string, pw: string){
+  public login(un: string, pw: string){
     return this.httpClient.post<LoginToken>(environment.expressApiURI + '/login', 
     {
       username: un,
@@ -21,7 +23,7 @@ export class ConnectionService {
     });
   }
 
-  register(username: string, email: string, password: string){
+  public register(username: string, email: string, password: string){
     return this.httpClient.post(environment.expressApiURI + '/register', {
       username: username,
       email: email,
