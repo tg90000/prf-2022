@@ -34,16 +34,15 @@ app.use(cors({
 
 
 const jwtKEY = process.env.JWT_KEY;
-passport.use('local', new LocalStrategy(function (username, password, done) {
+passport.use('local', new LocalStrategy(async function (username, password, done) {
     const userModel = mongoose.model('user')
     userModel.findOne({ username: username }, function (err, user) {
         if (err) return done('Hiba lekeres soran', null);
         if (!user) return done('Nincs ilyen felhasználónév', null);
-        user.comparePasswords(password, function (error, isMatch) {
-            if (error) return done(error, false);
-            if (!isMatch) return done('Hibas jelszo', false);
-            return done(null, jwt.encode({username: user.username}, jwtKEY));
-        })
+
+        const isMatch = bcrypt.compare(password, user.password);
+        if (!isMatch) return done('Hibas jelszo', false);
+        return done(null, jwt.encode({username: user.username}, jwtKEY));
     })
 }));
 
