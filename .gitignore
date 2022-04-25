@@ -104,3 +104,4 @@ dist
 .tern-port
 
 ./webshop/.angular/*
+./error.txt

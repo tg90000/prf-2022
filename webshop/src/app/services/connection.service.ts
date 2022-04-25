@@ -11,8 +11,6 @@ import { SessionService } from './session.service';
 })
 export class ConnectionService {
 
-  public data: string = "printme";
-
   constructor(private httpClient: HttpClient) { }
 
   public login(un: string, pw: string){

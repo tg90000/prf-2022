@@ -17,6 +17,7 @@ mongoose.connect(dbUrl)
 mongoose.connection.on('connected', () => {console.log('db csatlakoztatva')})
 mongoose.connection.on('error', (err) => {console.log('db csatlakozási hiba', err)})
 mongoose.model('aru', require('./models/product.model'))
+mongoose.model('user', require('./models/user.model'))
 
 app.use(express.json())
 app.use(express.urlencoded({
@@ -44,7 +45,8 @@ passport.use('bearer', new BearerStrategy(function (token, done) {
 }));
 
 
-app.use('/api/', require('./routes/product.routes'))
+app.use('/api/', require('./routes/product.routes'));
+app.use('/api/', require('./routes/user.routes'));
 
 app.listen(3000, () => {
     console.log('A szerver fut')

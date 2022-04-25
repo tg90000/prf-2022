@@ -29,11 +29,11 @@ import { SessionService } from './services/session.service';
     AngularMaterialModule,
     RegisterModule,
     LoginModule,
+    HttpClientModule
   ],
   providers: [
     ConnectionService,
     SessionService,
-    HttpClientModule,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

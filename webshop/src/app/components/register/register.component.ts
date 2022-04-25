@@ -23,7 +23,6 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               public connectionService: ConnectionService) {
-                console.log(this.connectionService.data);
   }
 
   get controls() {
@@ -31,7 +30,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.connectionService.data);
 
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9\-]+')]],

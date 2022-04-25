@@ -1,0 +1,40 @@
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+npm ERR! 
+npm ERR! While resolving: webshop@0.0.0
+npm ERR! Found: karma-jasmine@undefined
+npm ERR! node_modules/karma-jasmine
+npm ERR!   dev karma-jasmine@"~3.4.1" from the root project
+npm ERR! 
+npm ERR! Could not resolve dependency:
+npm ERR! peer karma-jasmine@">=1.1" from karma-jasmine-html-reporter@1.7.0
+npm ERR! node_modules/karma-jasmine-html-reporter
+npm ERR!   dev karma-jasmine-html-reporter@"^1.7.0" from the root project
+npm ERR! 
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force, or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+
+
+
+ng --version
+
+Angular CLI: 13.3.3
+Node: 16.14.2
+Package Manager: npm 8.5.0
+OS: darwin x64
+
+Angular: 13.3.4
+... animations, cdk, common, compiler, compiler-cli, core, forms
+... material, platform-browser, platform-browser-dynamic, router
+
+Package                         Version
+---------------------------------------------------------
+@angular-devkit/architect       0.1303.3
+@angular-devkit/build-angular   13.3.3
+@angular-devkit/core            13.3.3
+@angular-devkit/schematics      13.3.3
+@angular/cli                    13.3.3
+@schematics/angular             13.3.3
+rxjs                            6.5.5
+typescript    
