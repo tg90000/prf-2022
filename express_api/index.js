@@ -25,6 +25,15 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+app.use(cors({
+    origin: ['http://localhost:4200', 'http://localhost:3000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
+
+const jwtKEY = process.env.JWT_KEY;
 passport.use('local', new LocalStrategy(function (username, password, done) {
     const userModel = mongoose.model('user')
     userModel.findOne({ username: username }, function (err, user) {
@@ -33,13 +42,13 @@ passport.use('local', new LocalStrategy(function (username, password, done) {
         user.comparePasswords(password, function (error, isMatch) {
             if (error) return done(error, false);
             if (!isMatch) return done('Hibas jelszo', false);
-            return done(null, user);
+            return done(null, jwt.encode({username: user.username}, jwtKEY));
         })
     })
 }));
 
 passport.use('bearer', new BearerStrategy(function (token, done) {
-    const payload = jwt.decode(token, jwtSecret);
+    const payload = jwt.decode(token, jwtKEY);
     const user = userModel.findOne({username: payload.username}, '-_id username accessLevel');
     if (!user){return done(null, false);}
     return done(null, user);
