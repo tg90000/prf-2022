@@ -8,13 +8,7 @@ let userSchema = new mongoose.Schema(
             unique: true,
             required: true,
             minlength: [4, "Username must be at least 4 characters."],
-            maxlength: [20, "Username must not be longer than 20 characters."],
-            validate: {
-                validator: function(name){
-                    return /^[a-z0-9_\-]+$/i.test(value);
-                },
-                message: 'Username must contain only alphanumeric characters, underscores and dashes.'
-            }
+            maxlength: [20, "Username must not be longer than 20 characters."]
         },
         email: {
             type: String,
@@ -38,8 +32,8 @@ let userSchema = new mongoose.Schema(
             values: ['User', 'Admin']
         },
         cart: [new mongoose.Schema({
-            product: mongoose.ObjectId,
-            amount: Number
+            aruID: mongoose.ObjectId,
+            darab: Number
         })]
     },
     {
@@ -47,12 +41,14 @@ let userSchema = new mongoose.Schema(
     }
 );
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
     const user = this;
     if (user.isModified('password')) {
-        const salt =  bcrypt.genSalt(10);
-        user.password = bcrypt.hash(user.password, salt);
+        const salt =  await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
     } else {
         next();
     }
 });
+
+mongoose.model('user', userSchema);

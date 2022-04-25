@@ -17,7 +17,8 @@ mongoose.connect(dbUrl)
 mongoose.connection.on('connected', () => {console.log('db csatlakoztatva')})
 mongoose.connection.on('error', (err) => {console.log('db csatlakozási hiba', err)})
 mongoose.model('aru', require('./models/product.model'))
-mongoose.model('user', require('./models/user.model'))
+require('./models/user.model')
+const userModel = mongoose.model('user')
 
 app.use(express.json())
 app.use(express.urlencoded({
