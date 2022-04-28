@@ -120,7 +120,7 @@ router.route('/cart').post(passport.authenticate('bearer', { session: false }), 
         cartContent.push({
             _id: _aru.aru._id,
             nev: _aru.aru.nev,
-            ar: cartElement.aru.ar,
+            ar: _aru.aru.ar,
             darab: _aru.aru.darab
         });
     }
