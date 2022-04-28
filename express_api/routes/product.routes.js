@@ -3,13 +3,19 @@ const passport = require('passport');
 
 const mongoose = require('mongoose')
 const aruModel = mongoose.model('aru')
+const userModel = mongoose.model('user')
+
+// router.route('/product').post(passport.authenticate('bearer', { session: false }),(req, res) => {
+//     if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
+
+//router.route('/product').post(async (req, res) => {
 
 router.route('/product').post(passport.authenticate('bearer', { session: false }),(req, res) => {
-    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
+if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
     if(req.body.ar && req.body.darab) {
         let aru = new aruModel({nev: req.body.nev, ar: req.body.ar, 
             darab: req.body.darab})
-        aru.save((err) => {
+        await aru.save((err) => {
             if(err) {
                 return res.status(500).send('Gond a db beszuras soran ' + err)
             }
@@ -19,7 +25,7 @@ router.route('/product').post(passport.authenticate('bearer', { session: false }
         return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
 }).get(passport.authenticate('bearer', { session: false }),(req,res) => {
-    const products = productModel.find({}, '-__v')
+    const products = productModel.find({ar: {$gt: 0}}, '-__v')
     res.status(200).json(products);
 });
 
@@ -37,23 +43,6 @@ router.route('/product/:id?').get(passport.authenticate('bearer', { session: fal
             if(err) return res.status(500).send('Hiba az aru lekerese kozben')
             return res.status(200).send(aruk)
         })
-    }
-}).post(passport.authenticate('bearer', { session: false }),(req, res) => {
-    if(!req.params.id) {
-        return res.status(400).send('Add meg milyen árut kell felvenni!')
-    }
-    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
-    if(req.body.ar && req.body.darab) {
-        let aru = new aruModel({nev: req.params.id, ar: req.body.ar, 
-            darab: req.body.darab})
-        aru.save((err) => {
-            if(err) {
-                return res.status(500).send('Gond a db beszuras soran ' + err)
-            }
-            return res.status(200).send("Aru elmentve")
-        })
-    } else {
-        return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
 }).put(passport.authenticate('bearer', { session: false }),(req, res) => {
     if(req.params.id) {
@@ -91,5 +80,55 @@ router.route('/product/:id?').get(passport.authenticate('bearer', { session: fal
         })
     }
 })
+
+router.route('/cart').post(passport.authenticate('bearer', { session: false }), async (req, res) => {
+    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
+    const user = await userModel.findOne({username: req.user.username}, 'cart');
+    const aru = await aruModel.findOne( {_id: req.body.aruID}, 'aru');
+    if (req.body.darab > aru.darab) {
+        return res.status(400).send("Nincs eleg aru");
+    }
+
+    let contains = false;
+    for (const _aru of user.cart) {
+        if (_aru.aruID.toString() === req.body.aruID){
+            if (_aru.darab + req.body.darab > aru.darab) {
+                return res.status(400).send("Igy sincs eleg aru");
+            } else {
+                _aru.darab += req.body.darab;
+                contains = true;
+                break;
+            }
+        }
+    }
+
+    if (!contains){
+        user.cart.push({product: req.body.product, amount: req.body.amount});
+    }
+    await user.save();
+    res.status(200).send();
+
+}).get(passport.authenticate('bearer', { session: false }),async (req,res) => {
+    const user = await userModel.findOne({username: req.user.username}, '-_id cart')
+        .populate({path: 'cart', populate:{ path: 'aruk', model: 'aru', select: '-__v'}});
+
+    const cartContent = []
+    for (const _aru of user.cart) {
+        _aru.aru.darab = _aru.darab;
+        cartContent.push({
+            _id: _aru.aru._id,
+            nev: _aru.aru.nev,
+            ar: cartElement.aru.ar,
+            darab: _aru.aru.darab
+        });
+    }
+
+    return res.status(200).json(cartContent);
+}).delete(passport.authenticate('bearer', { session: false }),async (req, res) => {
+    const user = await userModel.findOne({username: req.user.username}, 'cart');
+    user.cart = []
+    await user.save();
+    res.status(200).send("Kosar kiuritve");
+});
 
 module.exports = router

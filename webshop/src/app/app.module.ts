@@ -14,6 +14,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './utils/AuthInterceptor';
 import { ConnectionService } from './services/connection.service';
 import { SessionService } from './services/session.service';
+import { ProductService } from './services/product.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SessionService } from './services/session.service';
     HttpClientModule
   ],
   providers: [
+    ProductService,
     ConnectionService,
     SessionService,
     {

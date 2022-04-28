@@ -1,11 +1,11 @@
 <mat-toolbar color="primary" class="app-header">
   <div>PRF Webshop 22'</div>
   <span class="nav-tool-items">
-    <a *ngIf="!isLoggedIn()" mat-button routerLink="login" routerLinkActive="active">Log In</a>
-    <a *ngIf="!isLoggedIn()" mat-button mat-raised-button routerLink="register" routerLinkActive="active">Register</a>
-    <a *ngIf="isLoggedIn()" mat-button routerLink="shop" routerLinkActive="active">Shop</a>
-    <a *ngIf="isLoggedIn()" mat-button routerLink="cart" routerLinkActive="active">Cart</a>
-    <a *ngIf="isLoggedIn()" mat-button mat-raised-button routerLink="login" routerLinkActive="active" (click)="logOut()">Log Out</a>
+    <a *ngIf="!isLoggedIn()" mat-button routerLink="login" routerLinkActive="active">Belépés</a>
+    <a *ngIf="!isLoggedIn()" mat-button mat-raised-button routerLink="register" routerLinkActive="active">Regisztráció</a>
+    <a *ngIf="isLoggedIn()" mat-button routerLink="shop" routerLinkActive="active">Áruk</a>
+    <a *ngIf="isLoggedIn()" mat-button routerLink="cart" routerLinkActive="active">Kosár</a>
+    <a *ngIf="isLoggedIn()" mat-button mat-raised-button routerLink="login" routerLinkActive="active" (click)="logOut()">Kilépés</a>
   </span>
 </mat-toolbar>
 

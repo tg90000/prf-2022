@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http"
-import { Product } from "../models/Product";
 import { LoginToken } from "../models/LoginToken";
 import { environment } from "../../environments/environment";
-import { SessionService } from './session.service';
 
 
 @Injectable({
@@ -28,10 +26,4 @@ export class ConnectionService {
       password: password
     });
   }
-
-  listProducts(){
-    return this.httpClient.get<Product[]>(environment.expressApiURI + '/products');
-  }
-
-
 }
