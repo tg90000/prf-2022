@@ -15,6 +15,7 @@ import { AuthInterceptor } from './utils/AuthInterceptor';
 import { ConnectionService } from './services/connection.service';
 import { SessionService } from './services/session.service';
 import { ProductService } from './services/product.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProductService } from './services/product.service';
     AngularMaterialModule,
     RegisterModule,
     LoginModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     ProductService,

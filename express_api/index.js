@@ -53,7 +53,6 @@ passport.use('bearer', new BearerStrategy(function (token, done) {
     return done(null, user);
 }));
 
-
 app.use('/api/', require('./routes/product.routes'));
 app.use('/api/', require('./routes/user.routes'));
 

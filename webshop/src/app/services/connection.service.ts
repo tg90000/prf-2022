@@ -20,7 +20,8 @@ export class ConnectionService {
   }
 
   public register(username: string, email: string, password: string){
-    return this.httpClient.post(environment.expressApiURI + '/register', {
+    return this.httpClient.post(environment.expressApiURI + '/register', 
+    {
       username: username,
       email: email,
       password: password

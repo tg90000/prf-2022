@@ -11,11 +11,11 @@ const userModel = mongoose.model('user')
 //router.route('/product').post(async (req, res) => {
 
 router.route('/product').post(passport.authenticate('bearer', { session: false }),(req, res) => {
-if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
+    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
     if(req.body.ar && req.body.darab) {
         let aru = new aruModel({nev: req.body.nev, ar: req.body.ar, 
             darab: req.body.darab})
-        await aru.save((err) => {
+        aru.save((err) => {
             if(err) {
                 return res.status(500).send('Gond a db beszuras soran ' + err)
             }
@@ -24,8 +24,8 @@ if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jo
     } else {
         return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
-}).get(passport.authenticate('bearer', { session: false }),(req,res) => {
-    const products = productModel.find({ar: {$gt: 0}}, '-__v')
+}).get(passport.authenticate('bearer', { session: false }), async(req,res) => {
+    const products = await aruModel.find({ar: {$gt: 0}}, '-__v')
     res.status(200).json(products);
 });
 
@@ -82,9 +82,11 @@ router.route('/product/:id?').get(passport.authenticate('bearer', { session: fal
 })
 
 router.route('/cart').post(passport.authenticate('bearer', { session: false }), async (req, res) => {
-    if (req.user.accessLevel !== 'Admin')return res.status(403).send('Ehhez nincs jogosultságod!');
+    console.log(req.user.accessLevel);
     const user = await userModel.findOne({username: req.user.username}, 'cart');
     const aru = await aruModel.findOne( {_id: req.body.aruID}, 'aru');
+    console.log(user);
+    console.log(aru);
     if (req.body.darab > aru.darab) {
         return res.status(400).send("Nincs eleg aru");
     }

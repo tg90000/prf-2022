@@ -1,41 +1,38 @@
 <div class="d-block">
-    <div class="d-flex justify-content-center p-2">
-      <a class="nav-link" href="/jatekosok/add">
-        <button type="button" class="btn btn-secondary btn-lg btn-block">Játékos hozzáadása</button>
-      </a>
+  <div class="d-flex justify-content-center p-2">
+    <a class="nav-link" href="/shop">
+      <button type="button" class="btn btn-secondary btn-lg btn-block">Termék hozzáadása</button>
+    </a>
+  </div>
+  <div class="d-block px-md-5 p-2">
+    <span class="d-block p-2 bg-primary text-white"></span>
+    <div class="p-3 border bg-light">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Áru</th>
+            <th scope="col">Ár</th>
+            <th scope="col">Darab</th>
+            <th scope="col">Művelet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <td>{{product.nev}}</td>
+            <td>{{product.ar}}</td>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" placeholder="0" min="0" [max]="product.darab" [(ngModel)]="input_num[i]">
+                <span matSuffix>db</span>
+              </mat-form-field>
+            </td>
+            <td class="d-flex justify-content-around">
+              <button type="button" class="btn btn-outline-secondary"
+                (click)="addToCart(product._id, i)">Kosárba</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="d-block px-md-5 p-2">
-      <span class="d-block p-2 bg-primary text-white"></span>
-      <div class="p-3 border bg-light">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Név</th>
-              <th scope="col">Poszt</th>
-              <th scope="col">Mezszám</th>
-              <th scope="col">Születési év</th>
-              <th scope="col">Csapatkapitány</th>
-              <th scope="col">Csapat</th>
-              <th scope="col">Művelet</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let player of players">
-              <td>{{player.vezeteknev}} {{player.keresztnev}}</td>
-              <td>{{player.poszt}}</td>
-              <td>{{player.mezszam}}</td>
-              <td>{{player.szulev}}</td>
-              <td *ngIf="player.csapatkapitany == 0">-</td>
-              <td *ngIf="player.csapatkapitany == 1">C</td>
-              <td>{{player.csapatid}}</td>
-              <td class="d-flex justify-content-around">
-                <a class="nav-link" href="/jatekosok">
-                  <button type="button" class="btn btn-outline-secondary"
-                    (click)="deletePlayer(player.ID)">Törlés</button>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  </div>
+</div>
