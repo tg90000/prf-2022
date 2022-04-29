@@ -28,7 +28,7 @@ app.use(express.urlencoded({
 }))
 
 app.use(cors({
-    origin: ['http://localhost:4200', 'http://localhost:3000'],
+    origin: ['http://localhost:4200', 'https://prf-2022.herokuapp.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
