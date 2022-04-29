@@ -7,6 +7,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const jwt = require('jwt-simple');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const path = require('path');
 const cors = require('cors');
