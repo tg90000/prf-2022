@@ -11,6 +11,8 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const cors = require('cors');
 
+const path = require('path');
+
 const dbUrl = process.env.MONGODB_URI;
 mongoose.connect(dbUrl)
 
@@ -55,6 +57,11 @@ passport.use('bearer', new BearerStrategy(async function (token, done) {
 
 app.use('/api/', require('./routes/product.routes'));
 app.use('/api/', require('./routes/user.routes'));
+
+app.use(express.static(path.join(__dirname, 'public')))
+    .set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    .get('/', ((req, res) => res.render('pages/index')));
 
 app.listen(3000, () => {
     console.log('A szerver fut')
