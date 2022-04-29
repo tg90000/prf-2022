@@ -11,8 +11,6 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const cors = require('cors');
 
-const path = require('path');
-
 const dbUrl = process.env.MONGODB_URI;
 mongoose.connect(dbUrl)
 
