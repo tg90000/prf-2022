@@ -62,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
     .get('/', ((req, res) => res.render('pages/index')));
+app.use((req, res) => { return res.sendFile(path.join(__dirname,'public/index.html')); });
 
 app.listen(3000, () => {
     console.log('A szerver fut')
