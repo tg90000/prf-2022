@@ -25,7 +25,7 @@ router.route('/product').post(passport.authenticate('bearer', { session: false }
         return res.status(400).send("Hiányzik a darabszám vagy az ár")
     }
 }).get(passport.authenticate('bearer', { session: false }), async(req,res) => {
-    const products = await aruModel.find({ar: {$gt: 0}}, '-__v')
+    const products = await aruModel.find({darab: {$gt: 0}}, '-__v')
     res.status(200).json(products);
 });
 
@@ -82,11 +82,8 @@ router.route('/product/:id?').get(passport.authenticate('bearer', { session: fal
 })
 
 router.route('/cart').post(passport.authenticate('bearer', { session: false }), async (req, res) => {
-    console.log(req.user.accessLevel);
     const user = await userModel.findOne({username: req.user.username}, 'cart');
-    const aru = await aruModel.findOne( {_id: req.body.aruID}, 'aru');
-    console.log(user);
-    console.log(aru);
+    const aru = await aruModel.findOne( {_id: req.body.aruID}, 'darab');
     if (req.body.darab > aru.darab) {
         return res.status(400).send("Nincs eleg aru");
     }
@@ -105,23 +102,22 @@ router.route('/cart').post(passport.authenticate('bearer', { session: false }), 
     }
 
     if (!contains){
-        user.cart.push({product: req.body.product, amount: req.body.amount});
+        user.cart.push({aruID: req.body.aruID, darab: req.body.darab});
     }
     await user.save();
     res.status(200).send();
 
 }).get(passport.authenticate('bearer', { session: false }),async (req,res) => {
     const user = await userModel.findOne({username: req.user.username}, '-_id cart')
-        .populate({path: 'cart', populate:{ path: 'aruk', model: 'aru', select: '-__v'}});
+        .populate({path: 'cart', populate:{ path: 'aruID', model: 'aru', select: '-__v'}});
 
     const cartContent = []
     for (const _aru of user.cart) {
-        _aru.aru.darab = _aru.darab;
         cartContent.push({
-            _id: _aru.aru._id,
-            nev: _aru.aru.nev,
-            ar: _aru.aru.ar,
-            darab: _aru.aru.darab
+            _id: _aru.aruID._id,
+            nev: _aru.aruID.nev,
+            ar: _aru.aruID.ar,
+            darab: _aru.darab
         });
     }
 
@@ -131,6 +127,18 @@ router.route('/cart').post(passport.authenticate('bearer', { session: false }), 
     user.cart = []
     await user.save();
     res.status(200).send("Kosar kiuritve");
+});
+
+router.route('/buy').delete(passport.authenticate('bearer', { session: false }),async(req, res) => {
+    const user = await userModel.findOne({username: req.user.username}, 'cart');
+    for (const _aru of user.cart){
+        const prod = await aruModel.findOne({_id: _aru.aruID}, '-__v');
+        prod.darab -= _aru.darab;
+        await prod.save();
+    }
+    user.cart = []
+    await user.save();
+    res.status(200).send("Kosar kiuritve, aru megveve");
 });
 
 module.exports = router

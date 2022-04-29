@@ -16,13 +16,15 @@ import { ConnectionService } from './services/connection.service';
 import { SessionService } from './services/session.service';
 import { ProductService } from './services/product.service';
 import { FormsModule } from '@angular/forms';
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShopComponent,
     CartComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

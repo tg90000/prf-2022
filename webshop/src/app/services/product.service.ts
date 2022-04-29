@@ -56,7 +56,11 @@ export class ProductService {
   }
 
   listCart(){
-    return this.httpClient.get(environment.expressApiURI + '/cart');
+    return this.httpClient.get<Product[]>(environment.expressApiURI + '/cart');
+  }
+
+  buyProducts(){
+    return this.httpClient.delete(environment.expressApiURI + '/buy');
   }
 
 }

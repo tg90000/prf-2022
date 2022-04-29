@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddProductComponent } from './components/add-product/add-product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginModule } from './components/login/login.module';
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'shop', component: ShopComponent, canActivate: [AuthGuard]},
   {path: 'cart', component:CartComponent, canActivate: [AuthGuard]},
+  {path: 'addproduct', component:AddProductComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundComponent}
 ];
 

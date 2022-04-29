@@ -46,9 +46,9 @@ passport.use('local', new LocalStrategy(async function (username, password, done
     })
 }));
 
-passport.use('bearer', new BearerStrategy(function (token, done) {
+passport.use('bearer', new BearerStrategy(async function (token, done) {
     const payload = jwt.decode(token, jwtKEY);
-    const user = userModel.findOne({username: payload.username}, '-_id username accessLevel');
+    const user = await userModel.findOne({username: payload.username}, '-_id username accessLevel');
     if (!user){return done(null, false);}
     return done(null, user);
 }));

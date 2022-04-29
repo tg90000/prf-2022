@@ -1,1 +1,27 @@
-<p>cart works!</p>
+<div class="d-block">
+    <div class="d-flex justify-content-center p-2">
+        <div><button type="button" class="btn btn-secondary btn-lg btn-block" (click)="buyProducts()">Vásárlás</button></div>
+        <div><button type="button" class="btn btn-secondary-outline btn-lg btn-block" (click)="deleteCart()">Kosár törlése</button></div>
+    </div>
+    <div class="d-block px-md-5 p-2">
+      <span class="d-block p-2 bg-primary text-white"></span>
+      <div class="p-3 border bg-light">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Áru</th>
+              <th scope="col">Ár</th>
+              <th scope="col">Darab</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products; let i = index">
+              <td>{{product.nev}}</td>
+              <td>{{product.ar}}</td>
+              <td>{{product.darab}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
