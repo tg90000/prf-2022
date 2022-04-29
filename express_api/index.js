@@ -34,7 +34,6 @@ app.use(cors({
     credentials: true
 }));
 
-
 const jwtKEY = process.env.JWT_KEY;
 passport.use('local', new LocalStrategy(async function (username, password, done) {
     const userModel = mongoose.model('user')
