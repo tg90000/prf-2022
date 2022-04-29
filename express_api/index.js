@@ -63,6 +63,6 @@ app.use(express.static(path.join(__dirname, 'public')))
     .get('/', ((req, res) => res.render('pages/index')));
 app.use((req, res) => { return res.sendFile(path.join(__dirname,'public/index.html')); });
 
-app.listen(51211, () => {
+app.listen(process.env.PORT || 3000, function(){
     console.log('A szerver fut')
-})
+  });
