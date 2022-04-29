@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         this.submitted = false;
         this.loading = false;
         this.loginForm.setErrors({invalid: true});
-        this.router.navigateByUrl('/products');
+        this.router.navigateByUrl('/shop');
         
 
       });

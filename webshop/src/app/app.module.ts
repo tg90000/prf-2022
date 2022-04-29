@@ -15,7 +15,7 @@ import { AuthInterceptor } from './utils/AuthInterceptor';
 import { ConnectionService } from './services/connection.service';
 import { SessionService } from './services/session.service';
 import { ProductService } from './services/product.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddProductComponent } from './components/add-product/add-product.component';
 
 @NgModule({
@@ -32,6 +32,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
     BrowserAnimationsModule,
     AngularMaterialModule,
     RegisterModule,
+    ReactiveFormsModule,
     LoginModule,
     HttpClientModule,
     FormsModule

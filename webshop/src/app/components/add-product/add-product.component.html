@@ -1,1 +1,44 @@
-<p>add-product works!</p>
+<div class="loginDiv">
+    <mat-card class="loginCard mat-elevation-z10">
+      <mat-card-header>
+        <mat-card-title>Termék hozzáadása</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="form" [formGroup]="addForm" (keyup.enter)="this.onSubmit()">
+          <mat-form-field>
+            <mat-label>Név</mat-label>
+            <input matInput formControlName="nev" name="nev" required>
+            <mat-error *ngIf="addForm.controls['nev'].hasError('required')">
+              Kitöltés kötelező
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Ár</mat-label>
+            <input matInput formControlName="ar" name="ar" required>
+            <mat-error *ngIf="addForm.controls['ar'].hasError('required')">
+              Kitöltés kötelező
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Darab</mat-label>
+            <input matInput formControlName="darab" name="darab" required>
+            <mat-error *ngIf="addForm.controls['darab'].hasError('required')">
+              Kitöltés kötelező
+            </mat-error>
+          </mat-form-field>
+          <mat-error *ngIf="addForm.hasError('invalid')" class="center">
+            Hozzáadás sikertelen.
+          </mat-error>
+        </form>
+      </mat-card-content>
+      <mat-card-actions class="loginCardActions">
+        <button mat-raised-button color="primary" [disabled]="loading || addForm.invalid" (click)="onSubmit()">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          <span>Hozzáadás</span>
+        </button>
+      </mat-card-actions>
+      <mat-card-footer class="loginCardFooter">
+        <a href="javascript:void(0)" routerLink="/shop">Vissza</a>
+      </mat-card-footer>
+    </mat-card>
+  </div>
